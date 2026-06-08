@@ -30,34 +30,56 @@ def get_Feedback(secret, guess):
 def show_Secret(mystery):
     print(mystery)
 
+codeColour = {
+    "1": "green",
+    "2": "yellow",
+    "3": "red",
+    "4": "blue",
+    "5": "orange",
+    "6": "pink"
+}
+
+
+def format_code_with_colors(code):
+    return " ".join(f"{digit}({codeColour[digit]})" for digit in code)
+
+
+def show_Secret(mystery):
+    print("Secret code:", format_code_with_colors(mystery))
+
+
 def play_Mastermind():
     print("Welcome to Mastermind!")
     print("Guess the 4-digit code. Each digit is from 1 to 6. You have 10 attempts.")
+    print("Digit colors:", format_code_with_colors(["1", "2", "3", "4", "5", "6"]))
     secret_Code = generate_Code()
     attempts = 10
 
     for attempt in range(1, attempts + 1):
         guess = ""
-        valid_Guess = False
-        while not valid_Guess:
+        while True:
             guess = input(f"Attempt {attempt}: ").strip()
-            valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
-            if not valid_Guess:
-                print("Invalid input. Enter 4 digits, each from 1 to 6.")
-            show_Secret(secret_Code) if guess == "cheat" else False
+            if guess.lower() == "cheat":
+                show_Secret(secret_Code)
+                continue
+            if len(guess) == 4 and all(c in "123456" for c in guess):
+                break
+            print("Invalid input. Enter 4 digits, each from 1 to 6.")
 
         black, white = get_Feedback(secret_Code, guess)
+        print("Your guess:", format_code_with_colors(guess))
         print(f"Black pegs (correct position): {black}, White pegs (wrong position): {white}")
 
         if black == 4:
-            print(f"Congratulations! You guessed the code: {''.join(secret_Code)}")
+            print(f"Congratulations! You guessed the code: {format_code_with_colors(secret_Code)}")
             return
 
-    print(f"Sorry, you've used all attempts. The correct code was: {''.join(secret_Code)}")
+    print(f"Sorry, you've used all attempts. The correct code was: {format_code_with_colors(secret_Code)}")
+
 
 if __name__ == "__main__":
     again = 'Y'
-    while again == 'Y' :
+    while again == 'Y':
         play_Mastermind()
-        again  = input (f"Play again (Y/N) ?").upper()
+        again = input("Play again (Y/N)? ").upper()
 
