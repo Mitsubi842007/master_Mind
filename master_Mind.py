@@ -27,16 +27,13 @@ def get_Feedback(secret, guess):
     
     return black_Pegs, white_Pegs
 
-def show_Secret(mystery):
-    print(mystery)
-
 codeColour = {
-    "1": "green",
-    "2": "yellow",
-    "3": "red",
-    "4": "blue",
-    "5": "orange",
-    "6": "pink"
+    "1": "green", "green": "1",
+    "2": "yellow", "yellow": "2",
+    "3": "red", "red": "3", 
+    "4": "blue", "blue": "4",
+    "5": "orange", "orange": "5",
+    "6": "pink", "pink": "6"
 }
 
 
@@ -62,12 +59,12 @@ def play_Mastermind():
             if guess.lower() == "cheat":
                 show_Secret(secret_Code)
                 continue
-            if len(guess) == 4 and all(c in "123456" for c in guess):
+            if len(guess) == 4 and all(c in codeColour for c in guess):
                 break
             print("Invalid input. Enter 4 digits, each from 1 to 6.")
 
         black, white = get_Feedback(secret_Code, guess)
-        print("Your guess:", format_code_with_colors(guess))
+        print("Your guess:", format_code_with_colors(list(guess)))
         print(f"Black pegs (correct position): {black}, White pegs (wrong position): {white}")
 
         if black == 4:
