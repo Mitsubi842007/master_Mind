@@ -27,8 +27,28 @@ def get_Feedback(secret, guess):
     
     return black_Pegs, white_Pegs
 
+<<<<<<< Updated upstream
 def show_Secret(mystery):
     print(mystery)
+=======
+codeColour = {
+    "1": "green", "green": "1",
+    "2": "yellow", "yellow": "2",
+    "3": "red", "red": "3",
+    "4": "blue", "blue": "4",
+    "5": "orange", "orange": "5",
+    "6": "pink", "pink": "6"
+}
+
+
+def format_code_with_colors(code):
+    return " ".join(f"{digit}({codeColour[digit]})" if digit.isdigit() else digit for digit in code)
+
+
+def show_Secret(mystery):
+    print("Secret code:", format_code_with_colors(mystery))
+
+>>>>>>> Stashed changes
 
 def play_Mastermind():
     print("Welcome to Mastermind!")
@@ -41,12 +61,24 @@ def play_Mastermind():
         valid_Guess = False
         while not valid_Guess:
             guess = input(f"Attempt {attempt}: ").strip()
+<<<<<<< Updated upstream
             valid_Guess = len(guess) == 4 and all(c in "123456" for c in guess)
             if not valid_Guess:
                 print("Invalid input. Enter 4 digits, each from 1 to 6.")
             show_Secret(secret_Code) if guess == "cheat" else False
 
         black, white = get_Feedback(secret_Code, guess)
+=======
+            if guess.lower() == "cheat":
+                show_Secret(secret_Code)
+                continue
+            if len(guess) == 4 and all(c in codeColour for c in guess):
+                break
+            print("Invalid input. Enter 4 digits, each from 1 to 6.")
+
+        black, white = get_Feedback(secret_Code, guess)
+        print("Your guess:", format_code_with_colors(list(guess)))
+>>>>>>> Stashed changes
         print(f"Black pegs (correct position): {black}, White pegs (wrong position): {white}")
 
         if black == 4:
